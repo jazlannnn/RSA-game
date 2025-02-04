@@ -8,6 +8,8 @@ from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, QH
                              QLabel, QLineEdit, QPushButton, QMessageBox, QStackedWidget, 
                              QTableWidget, QTextEdit, QTableWidgetItem, QComboBox)
 from PyQt5.QtCore import QTimer, Qt
+from PyQt5.QtGui import QMovie
+from PyQt5.QtWidgets import QLabel
 
 # Setup SQLite database
 def setup_database():
@@ -22,6 +24,66 @@ def setup_database():
     )''')
     conn.commit()
     conn.close()
+
+# Function to apply hacker theme
+def apply_hacker_theme(widget):
+    widget.setStyleSheet("""
+        QWidget {
+            background-color: black;
+            color: #33ff33;
+            font-family: 'Courier New';
+            background-image: url('background.jpg');
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        QPushButton {
+            background-color: black;
+            color: #33ff33;
+            border: 2px solid #33ff33;
+            font-size: 16px;
+            padding: 5px;
+        }
+        QPushButton:hover {
+            background-color: #33ff33;
+            color: white;
+        }
+        QLineEdit {
+            background-color: black;
+            color: #33ff33;
+            border: 1px solid #33ff33;
+            font-size: 16px;
+        }
+        QLabel {
+            font-size: 18px;
+        }
+        QTableWidget {
+            border: 1px solid #33ff33;
+            gridline-color: #33ff33;
+        }
+        QTableWidget::item {
+            padding: 5px;
+        }
+        QTableWidget::item:selected {
+            background-color: #33ff33;
+            color: #000000;
+        }    
+        QHeaderView::section {
+            background-color: transparent;
+            color: #33ff33;
+            padding: 4px;
+            border: 1px solid #33ff33;
+        }     
+    """)
+
+    # Create a QLabel to hold the animated GIF
+    # label = QLabel(widget)
+    # movie = QMovie("background.gif")
+    # label.setMovie(movie)
+    # movie.start()
+
+    # # Resize the label to cover the entire widget
+    # label.setGeometry(0, 0, widget.width(), widget.height())
+    # label.lower()  # Ensure the label is behind other widgets
 
 def add_score(player_name, difficulty, time_taken):
     conn = sqlite3.connect('game_leaderboard.db')
@@ -48,12 +110,12 @@ def get_top_scores():
 class MainMenu(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("RSA Game Modes")
+        self.setWindowTitle("RSA: The Game")
         self.setGeometry(100, 100, 600, 400)
         
         layout = QVBoxLayout()
         
-        title = QLabel("RSA Game Modes")
+        title = QLabel("Welcome to RSA: The Game")
         title.setAlignment(Qt.AlignCenter)
         title.setStyleSheet("font-size: 24px; font-weight: bold; margin: 20px;")
         
@@ -69,6 +131,7 @@ class MainMenu(QMainWindow):
         
         widget = QWidget()
         widget.setLayout(layout)
+        apply_hacker_theme(widget)
         self.setCentralWidget(widget)
     
     def open_time_attack(self):
@@ -139,6 +202,7 @@ class RSAGame(QMainWindow):
         layout.addStretch()
         
         widget.setLayout(layout)
+        apply_hacker_theme(widget)
         return widget
     
     def create_stage1(self):
@@ -165,6 +229,7 @@ class RSAGame(QMainWindow):
         layout.addStretch()
         
         widget.setLayout(layout)
+        apply_hacker_theme(widget)
         return widget
     
     def validate_primes(self):
@@ -216,6 +281,7 @@ class RSAGame(QMainWindow):
         layout.addStretch()
         
         widget.setLayout(layout)
+        apply_hacker_theme(widget)
         return widget
     
     def generate_keys(self):
@@ -268,6 +334,7 @@ class RSAGame(QMainWindow):
         layout.addStretch()
         
         widget.setLayout(layout)
+        apply_hacker_theme(widget)
         return widget
     
     def encrypt_message(self):
@@ -322,6 +389,7 @@ class RSAGame(QMainWindow):
         layout.addStretch()
         
         widget.setLayout(layout)
+        apply_hacker_theme(widget)
         return widget
     
     def decrypt_message(self):
@@ -497,6 +565,7 @@ class TimeAttackGame(QMainWindow):
         layout.addWidget(leaderboard_btn)
 
         widget.setLayout(layout)
+        apply_hacker_theme(widget)
         return widget
     
     def create_game_page(self):
@@ -520,6 +589,7 @@ class TimeAttackGame(QMainWindow):
         layout.addWidget(submit_btn)
 
         widget.setLayout(layout)
+        apply_hacker_theme(widget)
         return widget
 
     def create_leaderboard_page(self):
@@ -539,6 +609,7 @@ class TimeAttackGame(QMainWindow):
         layout.addWidget(back_btn)
 
         widget.setLayout(layout)
+        apply_hacker_theme(widget)
         return widget
 
     def start_game(self):
@@ -657,6 +728,7 @@ class Leaderboard(QMainWindow):
         layout.addWidget(self.leaderboard_table)
         widget = QWidget()
         widget.setLayout(layout)
+        apply_hacker_theme(widget)
         self.setCentralWidget(widget)
 
 if __name__ == "__main__":
