@@ -242,13 +242,24 @@ class RSAGame(QMainWindow):
         except ValueError:
             QMessageBox.warning(self, "Invalid Input", "Please enter valid integers")
             return
-            
+        
+        difficulty = self.difficulty  # This is the current difficulty
+        if difficulty == "easy":
+            min_prime, max_prime = 10, 100
+        elif difficulty == "medium":
+            min_prime, max_prime = 100, 1000
+        elif difficulty == "hard":
+            min_prime, max_prime = 1000, 10000
+        else:
+            QMessageBox.warning(self, "Unknown Difficulty", "Invalid difficulty level")
+            return
+        
         if not (self.is_prime(p) and self.is_prime(q)):
             QMessageBox.warning(self, "Invalid Primes", "Both numbers must be prime!")
             return
-        
-        if p < 11 or q < 11:  # Require larger prime numbers
-            QMessageBox.warning(self, "Prime Too Small", "Choose prime numbers greater than 10!")
+
+        if p < min_prime or q < min_prime or p > max_prime or q > max_prime:  # Check if within range
+            QMessageBox.warning(self, "Prime Out of Range", f"Choose prime numbers between {min_prime} and {max_prime}!")
             return
 
         self.p = p
